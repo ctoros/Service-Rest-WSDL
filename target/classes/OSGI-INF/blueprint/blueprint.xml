@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-    xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd                            http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
-    <bean class="cl.syachile.rest.Proceso" id="proceso"/>
-    <cxf:cxfEndpoint
-        address="http://localhost:8181/cxf/ServiciosProductos"
-        id="toProductorEnpoint" serviceClass="cl.syachile.rest.GetMessage"/>
-    <camelContext id="_context1" xmlns="http://camel.apache.org/schema/blueprint">
-        <route id="_route1">
-            <from id="_from1" uri="cxfrs:http://localhost:9092/route?resourceClasses=cl.syachile.rest.GetMessage"/>
-            <log id="_log2" message="antes remove header headername: ${header.operationName}"/>
-            <removeHeaders id="_removeHeaders1" pattern="CamelHttp*"/>
-            <log id="_log1" message="despues remove header operation name:${header.operationName}"/>
-            <setHeader headerName="operationName" id="_setHeader1">
-                <simple>getMessageee</simple>
-            </setHeader>
-            <log id="_log3" message="despues de set header: ${header.operationName}   operationNAMESPACES: ${header.operationNamespace}"/>
-            <bean id="_bean1" method="prepareList" ref="proceso"/>
-            <log id="_log4" message="imprimir bosy:${body}"/>
-            <to id="_to1" uri="cxf:bean:toProductorEnpoint"/>
-            <marshal id="_marshal1">
-                <json library="Jackson" prettyPrint="true"/>
-            </marshal>
-        </route>
-    </camelContext>
+	xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd                            http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+	<bean class="cl.syachile.rest.Proceso" id="proceso" />
+	<cxf:cxfEndpoint
+		address="http://localhost:8181/cxf/ServiciosProductos"
+		id="toProductorEnpoint"
+		serviceClass="cl.syachile.rest.GetMessage" />
+	<camelContext id="_context1"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<route id="_route1">
+			<from id="_from1"
+				uri="cxfrs:http://localhost:9092/route?resourceClasses=cl.syachile.rest.GetMessage" />
+			<log id="_log2"
+				message="antes remove header headername: ${header.operationName}" />
+			<removeHeaders id="_removeHeaders1"
+				pattern="CamelHttp*" />
+			<log id="_log1"
+				message="despues remove header operation name:${header.operationName}" />
+			<setHeader headerName="operationName" id="_setHeader1">
+				<simple>getMessageee</simple>
+			</setHeader>
+			<log id="_log3"
+				message="despues de set header: ${header.operationName}   operationNAMESPACES: ${header.operationNamespace}" />
+			<bean id="_bean1" method="prepareList" ref="proceso" />
+			<log id="_log4" message="imprimir bosy:${body}" />
+			<to id="_to1" uri="cxf:bean:toProductorEnpoint" />
+			<marshal id="_marshal1">
+				<json library="Jackson" prettyPrint="true" />
+			</marshal>
+			<log id="_log5" message="despues cxf ${body}" />
+		</route>
+	</camelContext>
 </blueprint>

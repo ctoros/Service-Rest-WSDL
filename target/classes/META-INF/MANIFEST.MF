@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1527812625746
+Bnd-LastModified: 1527864134952
 Build-Jdk: 1.8.0_161
 Built-By: ctoro
 Bundle-Blueprint: OSGI-INF/blueprint/blueprint.xml
